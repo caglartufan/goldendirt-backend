@@ -19,7 +19,28 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return response()->noContent();
+        $user = $request->user();
+        $token = $user->tokens()->where('name', 'Primary');
+
+        if($token) {
+            $token->delete();
+        }
+
+        $token = $user->createToken('Primary');
+
+        $apiTokenCookie = cookie(
+            'api_token',
+            $token->plainTextToken,
+            0,
+            env('SESSION_PATH', '/'),
+            env('SESSION_DOMAIN'),
+            env('SESSION_SECURE_COOKIE'),
+            env('SESSION_HTTP_ONLY', true),
+            false,
+            env('SESSION_SAME_SITE', 'lax')
+        );
+
+        return response()->noContent()->cookie($apiTokenCookie);
     }
 
     /**
