@@ -31,7 +31,7 @@ class AuthenticatedSessionController extends Controller
         $apiTokenCookie = cookie(
             'api_token',
             $token->plainTextToken,
-            0,
+            90 * 24 * 60,
             env('SESSION_PATH', '/'),
             env('SESSION_DOMAIN'),
             env('SESSION_SECURE_COOKIE'),
