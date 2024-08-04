@@ -1,0 +1,13 @@
+[90m= [39m[34;4mApp\Models\User[39;24m {#5810
+    [34mid[39m: [35m6[39m,
+    [34musername[39m: "[32mcaglartufan[39m",
+    [34memail[39m: "[32mcaglartufan09@gmail.com[39m",
+    [34mlevel[39m: [35m1[39m,
+    [34mxp[39m: [35m0[39m,
+    [34memail_verified_at[39m: [36mnull[39m,
+    #[33mpassword[39m: "[32m$2y$12$Rdyxgpl8UIZ/HXBWvLi.o.q9cccWwfJiF4DhbNP3OAkuNawAB72aa[39m",
+    #[33mremember_token[39m: "[32mqDmYHgyzmq0kFHeH4IBzT7znKS2jYNVQu5yfDeJ3FqZHIpcBAmsHYeBq0t1H[39m",
+    [34mcreated_at[39m: "[32m2024-07-21 21:29:14[39m",
+    [34mupdated_at[39m: "[32m2024-07-21 21:29:14[39m",
+  }
+
