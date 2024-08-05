@@ -10,6 +10,10 @@ class FarmField extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'status'
+    ];
+
     protected $attributes = [
         'status' => 'BARREN',
     ];

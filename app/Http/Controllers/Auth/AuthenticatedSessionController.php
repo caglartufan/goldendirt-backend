@@ -19,6 +19,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        // TODO: Send the same cookie upon sign-up in RegisteredUserController
         $user = $request->user();
         $token = $user->tokens()->where('name', 'Primary');
 

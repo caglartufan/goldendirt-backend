@@ -50,7 +50,7 @@ class PlayerLevel {
     return 0;
   }
 
-  private function __construct() {
+  private function __construct(): void {
     // Private constructor to hint that this class can not be constructed or instantiated.
   }
 }
