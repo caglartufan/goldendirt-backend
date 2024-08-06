@@ -18,28 +18,8 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-
-        // TODO: Send the same cookie upon sign-up in RegisteredUserController
-        $user = $request->user();
-        $token = $user->tokens()->where('name', 'Primary');
-
-        if($token) {
-            $token->delete();
-        }
-
-        $token = $user->createToken('Primary');
-
-        $apiTokenCookie = cookie(
-            'api_token',
-            $token->plainTextToken,
-            90 * 24 * 60,
-            env('SESSION_PATH', '/'),
-            env('SESSION_DOMAIN'),
-            env('SESSION_SECURE_COOKIE'),
-            env('SESSION_HTTP_ONLY', true),
-            false,
-            env('SESSION_SAME_SITE', 'lax')
-        );
+        
+        $apiTokenCookie = generatePrimaryApiTokenAndCookieForUser($request->user());
 
         return response()->noContent()->cookie($apiTokenCookie);
     }

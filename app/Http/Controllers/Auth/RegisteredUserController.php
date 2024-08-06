@@ -39,6 +39,8 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return response()->noContent();
+        $apiTokenCookie = generatePrimaryApiTokenAndCookieForUser($user);
+
+        return response()->noContent()->cookie($apiTokenCookie);
     }
 }
