@@ -16,7 +16,7 @@ function generatePrimaryApiTokenAndCookieForUser(User $user): Cookie {
       $token->delete();
   }
 
-  $token = $user->createToken('Primary');
+  $token = $user->createToken('Primary', ['*'], now()->addDays(90));
 
   return cookie(
       'api_token',
