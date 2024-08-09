@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\FarmFieldStatus;
 use App\Models\Crop;
 use App\Models\FarmField;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Support\Facades\Gate;
 
 class FarmFieldController extends Controller implements HasMiddleware
 {
@@ -39,10 +41,21 @@ class FarmFieldController extends Controller implements HasMiddleware
      */
     public function plant(FarmField $farmField, Crop $crop)
     {
-        // TODO: Check if the user meets the requirement to plant the crop.
-        return response([
-            'farmField' => $farmField,
-            'crop' => $crop
-        ]);
+        // Associate farmField instance with the crop instance
+        $farmField->crop()->associate($crop);
+        // Update the status, planted_at and harvestable_at columns of farmField
+        $farmField->status = FarmFieldStatus::CropGrowingUp;
+        $farmField->planted_at = now();
+        $farmField->harvestable_at = now()->addSeconds($crop->seconds_to_grow_up);
+
+        $farmField->save();
+
+        // TODO: Dispatch a job that updates farmField's status to "CROP_GROWN_UP"
+        // pushes an appropriate message to Redis database that needs to be
+        // caught from Socket.io's Redis listener and emits an event to the client
+        // to inform that the farmField of that user is harvestable
+
+        // Returned farmField data also contains "crop" field which contains the crop data
+        return response($farmField);
     }
 }

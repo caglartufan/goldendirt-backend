@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\FarmFieldStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -18,11 +19,24 @@ class FarmField extends Model
     ];
 
     protected $attributes = [
-        'status' => 'BARREN',
+        'status' => FarmFieldStatus::Barren->value,
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'status' => FarmFieldStatus::class,
+            'planted_at' => 'datetime',
+            'harvestable_at' => 'datetime'
+        ];
+    }
 
     public function user(): BelongsTo {
         return $this->belongsTo(User::class);
+    }
+
+    public function crop(): BelongsTo {
+        return $this->belongsTo(Crop::class);
     }
 
     public function resolveRouteBinding($value, $field = null)
