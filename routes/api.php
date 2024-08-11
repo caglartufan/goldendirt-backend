@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\FarmFieldController;
 use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Route;
 
 // Profile related routes
@@ -20,4 +21,10 @@ Route::name('game.')->prefix('game')->group(function() {
     })->where([
         'farmField' => '^(1[0-8]|[1-9])$' // 1-18 inclusively
     ])->whereNumber('crop');
+});
+
+Route::get('/redis-test', function() {
+    Redis::connection('default')->publish('test_channel', 'test message');
+
+    return response()->noContent();
 });

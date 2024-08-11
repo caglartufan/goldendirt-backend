@@ -51,11 +51,11 @@ class FarmField extends Model
             ]
         );
         if($validator->fails()) {
-            throw new NotFoundHttpException('Farm field was not found!');
+            abort(404, __('messages.farm_field.not_found'));
         }
 
         $user = Auth::user();
-        $farmField = $user->farmFields()->orderBy('id', 'asc')->skip($value - 1)->take(1)->first();
+        $farmField = $user->farmFields()->with('crop')->orderBy('id', 'asc')->skip($value - 1)->take(1)->first();
         
         return $farmField;
     }

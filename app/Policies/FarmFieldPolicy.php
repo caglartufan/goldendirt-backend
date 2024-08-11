@@ -20,11 +20,11 @@ class FarmFieldPolicy
         if($user->id !== $farmField->user_id) {
             // TODO: Move these error messages to a message file. Below message
             // is also duplicated in FarmField model's binding logic.
-            $response = Response::denyAsNotFound('Farm field was not found!');
+            $response = Response::denyAsNotFound(__('messages.farm_field.not_found'));
         } elseif($farmField->status !== FarmFieldStatus::Idle) {
-            $response = Response::denyWithStatus(400, 'Farm field is not available to plant crops.');
+            $response = Response::denyWithStatus(400, __('messages.farm_field.not_available_to_plant'));
         } elseif($user->level < $crop->level_required_to_plant) {
-            $response = Response::deny("You don't meet level requirement to plant this crop.");
+            $response = Response::deny(__('messages.farm_field.level_requirement_doesnt_meet'));
         }
 
         return $response;

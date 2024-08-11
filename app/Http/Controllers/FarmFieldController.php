@@ -21,7 +21,7 @@ class FarmFieldController extends Controller implements HasMiddleware
     public function list(Request $request)
     {
         $user = $request->user();
-        $farmFields = $user->farmFields()->orderBy('id', 'asc')->get();
+        $farmFields = $user->farmFields()->with('crop')->orderBy('id', 'asc')->get();
 
         return response($farmFields);
     }
@@ -44,7 +44,7 @@ class FarmFieldController extends Controller implements HasMiddleware
         // Associate farmField instance with the crop instance
         $farmField->crop()->associate($crop);
         // Update the status, planted_at and harvestable_at columns of farmField
-        $farmField->status = FarmFieldStatus::CropGrowingUp;
+        $farmField->status = FarmFieldStatus::Planted;
         $farmField->planted_at = now();
         $farmField->harvestable_at = now()->addSeconds($crop->seconds_to_grow_up);
 
