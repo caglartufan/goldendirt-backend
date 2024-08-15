@@ -3,7 +3,7 @@
 namespace App\Policies;
 
 use App\Enums\FarmFieldStatus;
-use App\Models\Crop;
+use App\Models\Seed;
 use App\Models\FarmField;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
@@ -13,7 +13,7 @@ class FarmFieldPolicy
     /**
      * Determine whether the user meet level requirement to plant the specified crop.
      */
-    public function plant(User $user, FarmField $farmField, Crop $crop): Response
+    public function plant(User $user, FarmField $farmField, Seed $seed): Response
     {
         $response = Response::allow();
 
@@ -23,7 +23,7 @@ class FarmFieldPolicy
             $response = Response::denyAsNotFound(__('messages.farm_field.not_found'));
         } elseif($farmField->status !== FarmFieldStatus::Idle) {
             $response = Response::denyWithStatus(400, __('messages.farm_field.not_available_to_plant'));
-        } elseif($user->level < $crop->level_required_to_plant) {
+        } elseif($user->level < $seed->level_required_to_plant) {
             $response = Response::deny(__('messages.farm_field.level_requirement_doesnt_meet'));
         }
 

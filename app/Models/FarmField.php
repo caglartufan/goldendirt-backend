@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class FarmField extends Model
 {
@@ -35,8 +34,8 @@ class FarmField extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function crop(): BelongsTo {
-        return $this->belongsTo(Crop::class);
+    public function seed(): BelongsTo {
+        return $this->belongsTo(Seed::class);
     }
 
     public function resolveRouteBinding($value, $field = null)
@@ -55,7 +54,7 @@ class FarmField extends Model
         }
 
         $user = Auth::user();
-        $farmField = $user->farmFields()->with('crop')->orderBy('id', 'asc')->skip($value - 1)->take(1)->first();
+        $farmField = $user->farmFields()->with('seed')->orderBy('id', 'asc')->skip($value - 1)->take(1)->first();
         
         return $farmField;
     }

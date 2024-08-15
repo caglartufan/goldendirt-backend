@@ -21,13 +21,13 @@ Route::name('game.')->prefix('game')->group(function() {
             ->where([
                 'farmField' => FARM_FIELD_PARAMETER_REGEXP
             ]);
-        Route::post('/{farmField}/plant/{crop}', [FarmFieldController::class, 'plant'])
+        Route::post('/{farmField}/plant/{seed}', [FarmFieldController::class, 'plant'])
             ->name('plant')
-            ->can('plant', ['farmField', 'crop'])
+            ->can('plant', ['farmField', 'seed'])
             ->where([
                 'farmField' => FARM_FIELD_PARAMETER_REGEXP
             ])
-            ->whereNumber('crop');
+            ->whereNumber('seed');
     });
 
     Route::name('warehouses.')->prefix('/warehouses')->group(function() {

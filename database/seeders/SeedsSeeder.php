@@ -2,18 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\Crop;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Seed;
 use Illuminate\Database\Seeder;
 
-class CropsSeeder extends Seeder
+class SeedsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        $crops = [
+        $seeds = [
             [
                 'name' => 'Lettuce',
                 'image' => env('APP_URL') . '/images/crops/lettuce.png',
@@ -31,6 +30,6 @@ class CropsSeeder extends Seeder
             ]
         ];
 
-        Crop::insert($crops);
+        Seed::insert($seeds);
     }
 }

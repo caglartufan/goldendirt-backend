@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('user_id')->unsigned();
             $table->enum('status', ['IDLE', 'CROP_GROWING_UP', 'CROP_GROWN_UP', 'BARREN'])->default('BARREN');
-            $table->bigInteger('crop_id')->unsigned()->nullable();
+            $table->bigInteger('seed_id')->unsigned()->nullable();
             $table->date('planted_at')->nullable();
             $table->date('harvestable_at')->nullable();
             $table->timestamps();

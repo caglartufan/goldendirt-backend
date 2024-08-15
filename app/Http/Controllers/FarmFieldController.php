@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\FarmFieldStatus;
-use App\Models\Crop;
+use App\Models\Seed;
 use App\Models\FarmField;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
@@ -20,7 +20,7 @@ class FarmFieldController extends Controller implements HasMiddleware
     public function list(Request $request)
     {
         $user = $request->user();
-        $farmFields = $user->farmFields()->with('crop')->orderBy('id', 'asc')->get();
+        $farmFields = $user->farmFields()->with('seed')->orderBy('id', 'asc')->get();
 
         return response($farmFields);
     }
@@ -38,14 +38,14 @@ class FarmFieldController extends Controller implements HasMiddleware
      * Plant the specified Crop to the Nth FarmField of the user
      * and checks if they are eligible to plant the crop
      */
-    public function plant(FarmField $farmField, Crop $crop)
+    public function plant(FarmField $farmField, Seed $seed)
     {
         // Associate farmField instance with the crop instance
-        $farmField->crop()->associate($crop);
+        $farmField->seed()->associate($seed);
         // Update the status, planted_at and harvestable_at columns of farmField
         $farmField->status = FarmFieldStatus::Planted;
         $farmField->planted_at = now();
-        $farmField->harvestable_at = now()->addSeconds($crop->seconds_to_grow_up);
+        $farmField->harvestable_at = now()->addSeconds($seed->seconds_to_grow_up);
 
         $farmField->save();
 
