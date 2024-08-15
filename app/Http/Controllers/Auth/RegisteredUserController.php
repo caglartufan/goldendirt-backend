@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Jobs\CreateFarmFieldsForUser;
+use App\Jobs\CreateFirstWarehouseAndItsSlotsForUser;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -36,6 +37,7 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         CreateFarmFieldsForUser::dispatchSync($user);
+        CreateFirstWarehouseAndItsSlotsForUser::dispatchSync($user);
 
         Auth::login($user);
 

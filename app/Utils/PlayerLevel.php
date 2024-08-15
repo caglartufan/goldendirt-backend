@@ -20,7 +20,7 @@ class PlayerLevel {
     return self::$levelXpRequirements[$level];
   }
 
-  public static function calculateLevelFromTotalXp(int $totalExp): int {
+  public static function calculateLevelFromTotalXp(int $totalXp): int {
     $level = 1;
 
     foreach(self::$levelXpRequirements as $xpRequired) {
@@ -28,8 +28,8 @@ class PlayerLevel {
         continue;
       }
 
-      $totalExp -= $xpRequired;
-      if($totalExp >= 0) {
+      $totalXp -= $xpRequired;
+      if($totalXp >= 0) {
         $level++;
       }
     }
@@ -37,12 +37,12 @@ class PlayerLevel {
     return $level;
   }
 
-  public static function calculateXpRequiredForLevelUp(int $currentXp): int {
+  public static function calculateXpRequiredForLevelUp(int $totalXp): int {
     foreach(self::$levelXpRequirements as $xpRequired) {
-      $currentXp -= $xpRequired;
+      $totalXp -= $xpRequired;
 
-      if($currentXp < 0) {
-        return -$currentXp;
+      if($totalXp < 0) {
+        return -$totalXp;
       }
     }
 
@@ -50,7 +50,7 @@ class PlayerLevel {
     return 0;
   }
 
-  private function __construct(): void {
+  private function __construct() {
     // Private constructor to hint that this class can not be constructed or instantiated.
   }
 }
