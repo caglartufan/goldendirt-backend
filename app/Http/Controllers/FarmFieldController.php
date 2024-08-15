@@ -7,7 +7,6 @@ use App\Models\Crop;
 use App\Models\FarmField;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Support\Facades\Gate;
 
 class FarmFieldController extends Controller implements HasMiddleware
 {
