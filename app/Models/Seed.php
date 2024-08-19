@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class Seed extends Model
 {
@@ -16,7 +17,6 @@ class Seed extends Model
      *  name,
      *  image,
      *  seconds_to_grow_up,
-     *  seed_cost_at_market,
      *  xp_reward,
      *  level_required_to_plant
      * TODO: Move seed_cost_at_market field to MarketProduct model to de-couple models.
@@ -27,12 +27,15 @@ class Seed extends Model
         'name',
         'image',
         'seconds_to_grow_up',
-        'seed_cost_at_market',
         'xp_reward',
         'level_required_to_plant'
     ];
 
     public function farmFields(): HasMany {
         return $this->hasMany(FarmField::class);
+    }
+
+    public function marketProduct(): MorphOne {
+        return $this->morphOne(MarketProduct::class, 'marketable');
     }
 }

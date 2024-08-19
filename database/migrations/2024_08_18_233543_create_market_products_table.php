@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('seeds', function (Blueprint $table) {
+        Schema::create('market_products', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('image')->nullable();
-            $table->unsignedMediumInteger('seconds_to_grow_up');
-            $table->unsignedSmallInteger('xp_reward');
-            $table->unsignedTinyInteger('level_required_to_plant');
+            $table->bigInteger('marketable_id')->unsigned();
+            $table->string('marketable_type');
+            $table->integer('price')->unsigned();
         });
     }
 
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('seeds');
+        Schema::dropIfExists('market_products');
     }
 };

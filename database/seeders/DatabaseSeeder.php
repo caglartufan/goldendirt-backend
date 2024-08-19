@@ -21,7 +21,8 @@ class DatabaseSeeder extends Seeder
         // ]);
         
         $this->call([
-            SeedsSeeder::class
+            SeedSeeder::class,
+            MarketProductSeeder::class
         ]);
     }
 }

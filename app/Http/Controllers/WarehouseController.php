@@ -31,7 +31,6 @@ class WarehouseController extends Controller implements HasMiddleware
         }
 
         return response($warehouses);
-
     }
 
     /**
