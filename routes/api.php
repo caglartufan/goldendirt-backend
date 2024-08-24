@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FarmFieldController;
+use App\Http\Controllers\MarketProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WarehouseController;
 use Illuminate\Support\Facades\Redis;
@@ -34,6 +35,14 @@ Route::name('game.')->prefix('game')->group(function() {
         Route::get('/{warehouseNumber?}', [WarehouseController::class, 'list'])
             ->name('list')
             ->whereNumber('warehouseNumber');
+    });
+
+    Route::name('market.')->prefix('/market')->group(function() {
+        Route::get('/', [MarketProductController::class, 'list'])
+            ->name('list');
+        Route::post('/{marketProduct}/buy', [MarketProductController::class, 'buy'])
+            ->name('buy')
+            ->whereNumber('marketProduct');
     });
 });
 
